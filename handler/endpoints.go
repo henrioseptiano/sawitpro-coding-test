@@ -164,8 +164,8 @@ func (s *Server) GetProfile(ctx echo.Context) error {
 
 	dataResponse := map[string]map[string]string{
 		"data": {
-			"full_name":    getUser.FullName,
-			"phone_number": getUser.PhoneNumber,
+			"full_name":    strings.TrimRight(getUser.FullName, " "),
+			"phone_number": strings.TrimSpace(getUser.PhoneNumber),
 		},
 	}
 	return ctx.JSON(http.StatusOK, dataResponse)
