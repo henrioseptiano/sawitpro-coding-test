@@ -1,0 +1,192 @@
+# This is the OpenAPI specification for your service. It is used to generate the client code.
+# To generate the server code, use the Gradle task `openApiGenerate`. The 
+# generated code will be placed in `build/generate-resources/main`.
+#
+# We will evaluate you based on how well you design your API.
+# 1. How well it follows REST principles.
+# 2. How easy it is to understand and use.
+#
+# References
+# 1. https://swagger.io/specification/
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: User Service
+  license:
+    name: MIT
+servers:
+  - url: http://localhost/1323
+paths:
+  /register:
+    post:
+      summary: This endpoint use to register the new user
+      operationId: Register the user
+      requestBody:
+        description: User to register
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegUserRequest'
+      responses:
+        '200':
+          description: user response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegResponse'
+        '400':
+          description: Field validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /login:
+    post:
+      summary: This endpoint use to log in the existing user to the app
+      operationId: LoginUser
+      requestBody:
+        description: User to register
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: login response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Field validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /user:
+    get:
+      summary: This endpoint use to get the user profile
+      operationId: getProfile
+      security:
+        - jwtAuth: []
+      responses:
+        '200':
+          description: profile user response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileUserResponse'
+        '400':
+          description: Field validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: This endpoint use to update the user profile
+      operationId: updateProfile
+      requestBody:
+        description: Update User Profile
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileRequest'
+      responses:
+        '200':
+          description: update user profile response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProfileResponse'
+        '400':
+          description: Field validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    RegUserRequest:
+      type: object
+      required:
+        - phone_number
+        - full_name
+        - password
+      properties:
+        phone_number:
+          type: string
+        full_name:
+          type: string
+        password:
+          type: string
+    RegResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+    LoginRequest:
+      type: object
+      required:
+        - phone_number
+        - password
+      properties:
+        phone_number:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      required:
+        - message
+        - token
+        - refresh_token
+      properties:
+        message:
+          type: string
+        token:
+          type: string
+        refresh_token:
+          type: string
+    ProfileUserResponse:
+      type: object
+      required:
+        - phone_number
+        - full_name
+      properties:
+        phone_number:
+          type: string
+        full_name:
+          type: string
+    UpdateProfileRequest:
+      type: object
+      required:
+        - phone_number
+        - full_name
+      properties:
+        phone_number:
+          type: string
+        full_name:
+          type: string
+    UpdateProfileResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+    ErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
