@@ -1,0 +1,119 @@
+definitions:
+  generated.LoginUserJSONRequestBody:
+    properties:
+      password:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  generated.RegisterTheUserJSONRequestBody:
+    properties:
+      full_name:
+        type: string
+      password:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  generated.UpdateProfileJSONRequestBody:
+    properties:
+      full_name:
+        type: string
+      phone_number:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is a sample server Cellar server.
+  license:
+    name: Apache 2.0
+  termsOfService: http://swagger.io/terms/
+  title: SawitPro Swagger Example API
+  version: "1.0"
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Login Existing User
+      operationId: LoginUser
+      parameters:
+      - description: Login User JSON Body
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/generated.LoginUserJSONRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: LoginUser
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Register New User
+      operationId: RegisterTheUser
+      parameters:
+      - description: Register user JSON Body
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/generated.RegisterTheUserJSONRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: RegisterTheUser
+  /user:
+    get:
+      consumes:
+      - application/json
+      description: Get User Profile
+      operationId: GetProfile
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: GetProfile
+    put:
+      consumes:
+      - application/json
+      description: Update User Profile
+      operationId: UpdateProfile
+      parameters:
+      - description: Update User Profile JSON Body
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/generated.UpdateProfileJSONRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: UpdateProfile
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

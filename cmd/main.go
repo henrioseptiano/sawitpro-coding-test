@@ -1,21 +1,35 @@
 package main
 
 import (
+	"github.com/labstack/echo/v4"
+	echoSwagger "github.com/swaggo/echo-swagger"
 	"os"
 
+	_ "github.com/SawitProRecruitment/UserService/docs"
 	"github.com/SawitProRecruitment/UserService/generated"
 	"github.com/SawitProRecruitment/UserService/handler"
 	"github.com/SawitProRecruitment/UserService/repository"
 	_ "github.com/joho/godotenv/autoload"
-	"github.com/labstack/echo/v4"
 )
 
+// @title SawitPro Swagger Example API
+// @version 1.0
+// @description This is a sample server Cellar server.
+// @termsOfService http://swagger.io/terms/
+// @license.name Apache 2.0
+// @securityDefinitions.apikey	ApiKeyAuth
+// @in							header
+// @name						Authorization
+// @host localhost:1323
 func main() {
 	e := echo.New()
 
 	var server generated.ServerInterface = newServer()
 
 	generated.RegisterHandlers(e, server)
+
+	// Endpoint for serving Swagger JSON
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	e.Logger.Fatal(e.Start(":1323"))
 }
 

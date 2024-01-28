@@ -102,5 +102,9 @@ func DecodeJWTToken(tokenString string) (*string, error) {
 }
 
 func GetTokenFromAuthHeader(auth string) string {
-	return strings.Split(auth, " ")[1]
+	strs := strings.Split(auth, " ")
+	if len(strs) > 1 {
+		return strs[1]
+	}
+	return ""
 }

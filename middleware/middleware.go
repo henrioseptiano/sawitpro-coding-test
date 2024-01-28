@@ -12,13 +12,13 @@ func JWTMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		tokenString := c.Request().Header.Get("Authorization")
 		if tokenString == "" {
-			return echo.NewHTTPError(http.StatusUnauthorized, "missing token")
+			return echo.NewHTTPError(http.StatusForbidden, "missing token")
 		}
 
 		// Extract the token from the Authorization header
 		parts := strings.Split(tokenString, " ")
 		if len(parts) != 2 || parts[0] != "Bearer" {
-			return echo.NewHTTPError(http.StatusUnauthorized, "invalid token format")
+			return echo.NewHTTPError(http.StatusForbidden, "invalid token format")
 		}
 		tokenString = parts[1]
 
@@ -29,7 +29,7 @@ func JWTMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		})
 
 		if err != nil || !token.Valid {
-			return echo.NewHTTPError(http.StatusUnauthorized, "invalid token")
+			return echo.NewHTTPError(http.StatusForbidden, "invalid token")
 		}
 
 		// Check if it's a refresh token
@@ -37,7 +37,7 @@ func JWTMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 			// Handle refresh token logic here
 			// Example: check if the refresh token is valid and generate a new access token
 			// If refresh token is not valid or expired, return an error
-			return echo.NewHTTPError(http.StatusUnauthorized, "refresh token is not allowed for this endpoint")
+			return echo.NewHTTPError(http.StatusForbidden, "refresh token is not allowed for this endpoint")
 		}
 
 		// Set user context for access token

@@ -16,6 +16,16 @@ import (
 	"time"
 )
 
+// RegisterTheUser
+//
+//	@Summary		RegisterTheUser
+//	@Description	Register New User
+//	@ID				RegisterTheUser
+//	@Accept			application/json
+//	@Produce		json
+//	@Param			user	body	generated.RegisterTheUserJSONRequestBody	true	"Register user JSON Body"
+//	@Success		200		{string}	string			"ok"
+//	@Router			/register [post]
 func (s *Server) RegisterTheUser(ctx echo.Context) error {
 	body, err := io.ReadAll(ctx.Request().Body)
 	if err != nil {
@@ -77,6 +87,16 @@ func (s *Server) RegisterTheUser(ctx echo.Context) error {
 	return ctx.JSON(http.StatusCreated, response)
 }
 
+// LoginUser
+//
+//	@Summary		LoginUser
+//	@Description	Login Existing User
+//	@ID				LoginUser
+//	@Accept			application/json
+//	@Produce		json
+//	@Param			user	body	generated.LoginUserJSONRequestBody	true	"Login User JSON Body"
+//	@Success		200		{string}	string			"ok"
+//	@Router			/login [post]
 func (s *Server) LoginUser(ctx echo.Context) error {
 	body, err := io.ReadAll(ctx.Request().Body)
 	if err != nil {
@@ -120,6 +140,16 @@ func (s *Server) LoginUser(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, response)
 }
 
+// GetProfile
+//
+//	@Summary		GetProfile
+//	@Description	Get User Profile
+//	@ID				GetProfile
+//	@Accept			application/json
+//	@Security		ApiKeyAuth
+//	@Produce		json
+//	@Success		200		{string}	string			"ok"
+//	@Router			/user [get]
 func (s *Server) GetProfile(ctx echo.Context) error {
 	getAuth := ctx.Request().Header.Get("Authorization")
 	tokenString := utils.GetTokenFromAuthHeader(getAuth)
@@ -141,6 +171,17 @@ func (s *Server) GetProfile(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, dataResponse)
 }
 
+// UpdateProfile
+//
+//	@Summary		UpdateProfile
+//	@Description	Update User Profile
+//	@ID				UpdateProfile
+//	@Accept			application/json
+//	@Security		ApiKeyAuth
+//	@Produce		json
+//	@Param			user	body	generated.UpdateProfileJSONRequestBody	true	"Update User Profile JSON Body"
+//	@Success		200		{string}	string			"ok"
+//	@Router			/user [put]
 func (s *Server) UpdateProfile(ctx echo.Context) error {
 	getAuth := ctx.Request().Header.Get("Authorization")
 	tokenString := utils.GetTokenFromAuthHeader(getAuth)

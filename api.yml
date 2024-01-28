@@ -87,6 +87,8 @@ paths:
     put:
       summary: This endpoint use to update the user profile
       operationId: updateProfile
+      security:
+        - jwtAuth: []
       requestBody:
         description: Update User Profile
         required: true
