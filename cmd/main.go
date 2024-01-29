@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/labstack/echo/v4"
 	echoSwagger "github.com/swaggo/echo-swagger"
 	"os"
@@ -30,7 +31,8 @@ func main() {
 
 	// Endpoint for serving Swagger JSON
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
-	e.Logger.Fatal(e.Start(":1323"))
+	port := os.Getenv("APP_PORT")
+	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", port)))
 }
 
 func newServer() *handler.Server {

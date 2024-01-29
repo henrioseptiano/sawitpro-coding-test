@@ -19,7 +19,10 @@ test:
 	go test -short -coverprofile coverage.out -v ./...
 
 generate: generated generate_mocks
-
+down:
+	docker-compose down --volumes
+build:
+	docker-compose up -d
 generated: api.yml
 	@echo "Generating files..."
 	mkdir generated || true

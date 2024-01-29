@@ -29,6 +29,8 @@ To start working, execute
 make init
 ```
 
+and please follow from .env.example file by copy the file and renamed the copied file to .env
+
 ## Running
 
 To run the project, run the following command:
@@ -37,12 +39,24 @@ To run the project, run the following command:
 docker-compose up --build
 ```
 
+or 
+
+```
+make build
+```
+
 You should be able to access the API at http://localhost:8080
 
 If you change `database.sql` file, you need to reinitate the database by running:
 
 ```
 docker-compose down --volumes
+```
+
+or 
+
+```
+make down
 ```
 
 ## Testing

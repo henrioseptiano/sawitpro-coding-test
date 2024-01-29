@@ -2,9 +2,12 @@ services:
   app:
     build: .
     ports:
-      - "8080:1323"
+      - ${DOCKER_APP_PORT}:${APP_PORT}
     environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/database?sslmode=disable
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      APP_PORT: ${APP_PORT}
+      DOCKER_APP_PORT: ${DOCKER_APP_PORT}
     depends_on:
       db:
         condition: service_healthy
